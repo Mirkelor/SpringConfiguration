@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd">
+
+
+    <!-- load the properties file: sport.properties -->
+    <context:property-placeholder location="sport.properties, coach.properties"/>
+	
+    <!-- Define your beans here -->
+
+    <!-- define the dependency -->
+	<bean id="fortuneService"
+		  class="com.mirkelor.springdemo.RandomFortuneService">
+	</bean>
+
+	<bean id="tennisCoach"
+		  class="com.mirkelor.springdemo.TennisCoach"
+		  scope="prototype"
+		  init-method="doMyStartupStuff"
+		  destroy-method="doMyCleanupStuff">
+		 <!--set up constructor injection -->
+		<constructor-arg ref="fortuneService"/>
+
+		<!-- set up setter injection -->
+		<property name="fortuneService" ref="fortuneService"/>
+
+        <property name="email" value="${p.email}"/>
+
+        <property name="team" value="${p.team}"/>
+
+        <property name="name" value="${p.name}"/>
+
+	</bean>
+</beans>
+
+
+
+
+
